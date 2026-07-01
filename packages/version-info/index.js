@@ -98,22 +98,14 @@ export const getRemote = async () => {
                         ?.split('url = ')[1];
 
         const parsed = parseRemoteUrl(remote);
-
-        if (!parsed) {
-            throw 'could not parse remote';
-        }
-
-        return parsed;
+        if (parsed) return parsed;
     }
 
     const env = await loadGitEnv();
     const parsed = parseRemoteUrl(env.GIT_REMOTE);
+    if (parsed) return parsed;
 
-    if (!parsed) {
-        throw 'could not parse remote';
-    }
-
-    return parsed;
+    return undefined;
 }
 
 export const getVersion = async () => {
